@@ -25,115 +25,557 @@ button, input{
     font-family: inherit;
 }
 
-/******** __--__-- NAVBAR DESIGN STARTS HERE __--__--********/
+
+
+/******** __--__-- NAVBAR DESIGN 3.0 (LIQUID GLASS) STARTS HERE __--__--********/
+
+:root{
+    --nav-h: 70px;
+    --nav-gap: 14px;
+}
+
+/* stops the floating navbar from covering headings when a nav link is clicked */
+html{
+    scroll-padding-top: calc(var(--nav-h) + var(--nav-gap) + 16px);
+}
+
+/* floating glass pill. The negative bottom margin cancels its height,
+   so the page starts at the very top and scrolls UNDER the glass. */
 .navbar{
-    width: 100%;
-    height: 80px;
+    position: sticky;
+    top: var(--nav-gap);
+    z-index: 1000;
+
+    width: calc(100% - 48px);
+    max-width: 1280px;
+    height: var(--nav-h);
+
+    margin: var(--nav-gap) auto calc(-1 * (var(--nav-h) + var(--nav-gap)));
+    padding: 0 28px;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    padding: 0.7%;
+    gap: 20px;
 
-    background-color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.62),
+        rgba(255, 255, 255, 0.42)
+    );
 
-    border-bottom: 1px solid #e5eaf0;
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    backdrop-filter: blur(22px) saturate(180%);
 
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 999px;
+
+    box-shadow:
+        0 12px 40px rgba(15, 39, 71, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.25),
+        inset 0 0 22px rgba(255, 255, 255, 0.25);
+}
+
+/* glossy light sheen across the glass */
+.navbar::before{
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    border-radius: inherit;
+
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.55) 0%,
+        rgba(255, 255, 255, 0) 30%,
+        rgba(255, 255, 255, 0) 70%,
+        rgba(255, 255, 255, 0.25) 100%
+    );
+
+    pointer-events: none;
+}
+
+/* keep the real content above the sheen */
+.navbar > *{
+    position: relative;
+    z-index: 1;
 }
 
 /******** LOGO STYLES ********/
-.logo{
-    font-size: 24px;
-    font-weight: 700;
+.logo img{
+    height: 46px;
+    width: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
 
-    color: #0f2747;
+.logo img:hover{
+    transform: scale(1.05);
+}
 
-    white-space: nowrap;
+.logo a{
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
 }
 
 /******** NAVIGATION-LINK STYLES ********/
 .nav-links{
     display: flex;
     align-items: center;
-    
-    gap: 35px;
+
+    gap: 6px;
 }
 
 .nav-links a{
+    position: relative;
+
+    padding: 10px 16px;
+
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 600;
+    white-space: nowrap;
 
-    color: #40556f;
+    color: #0B2A5B;
 
-    transition: color 0.3s ease;
+    border: 1px solid transparent;
+    border-radius: 999px;
+
+    transition: background-color 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease,
+                color 0.3s ease;
 }
 
-.nav-links a:hover{
+.nav-links a i{
+    margin-left: 6px;
+
     color: #2563eb;
+
+    transition: transform 0.3s ease;
+}
+
+.nav-links a::after{
+    content: "";
+    position: absolute;
+
+    left: 50%;
+    bottom: 4px;
+    width: 0;
+    height: 2px;
+
+    background-color: #f5a623;
+    border-radius: 2px;
+
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+/* hovered link becomes a small glass bubble */
+.nav-links a:hover,
+.nav-links a:focus-visible,
+.nav-links a.active{
+    color: #2563eb;
+
+    background-color: rgba(255, 255, 255, 0.55);
+    border-color: rgba(255, 255, 255, 0.8);
+
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.nav-links a:hover i,
+.nav-links a:focus-visible i{
+    transform: translateY(-2px) scale(1.15);
+}
+
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after,
+.nav-links a.active::after{
+    width: 40%;
+}
+
+.nav-links a:focus-visible{
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
 }
 
 /******** NAVBAR BUTTON STYLES ********/
 .nav-button{
-    padding: 10px 20px;
+    padding: 11px 26px;
 
     color: #ffffff;
-    background-color: #2563eb;
+    background: linear-gradient(135deg, #2563eb, #1e88e5);
 
     font-size: 14px;
     font-weight: 600;
+    white-space: nowrap;
 
-    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 999px;
 
     cursor: pointer;
 
-    transition: background-color 0.3s ease,
-    transform 0.3s ease;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.45);
+
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease;
 }
 
-.nav-button:hover{
-    background-color: #1d4ed8;
-
+.nav-button:hover,
+.nav-button:focus-visible{
     transform: translateY(-2px);
+
+    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
-/******** __--__-- HERO SECTION DESIGN STARTS HERE __--__--********/
+.nav-button:focus-visible{
+    outline: 2px solid #0f2747;
+    outline-offset: 3px;
+}
+
+.nav-button:active{
+    transform: translateY(0);
+}
+
+/******** MOBILE MENU TOGGLE (hidden on desktop) ********/
+.nav-toggle,
+.nav-toggle-label{
+    display: none;
+}
+
+/******** FALLBACK: browsers without backdrop-filter get a solid bar ********/
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))){
+    .navbar{
+        background: rgba(255, 255, 255, 0.95);
+    }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1000px){
+    .navbar{
+        width: calc(100% - 32px);
+
+        padding: 0 20px;
+    }
+
+    .nav-links a{
+        padding: 10px 12px;
+    }
+
+    /* icons are dropped here to save space */
+    .nav-links a i{
+        display: none;
+    }
+}
+
+@media (max-width: 900px){
+    :root{
+        --nav-h: 64px;
+        --nav-gap: 10px;
+    }
+
+    .navbar{
+        padding: 0 14px 0 20px;
+    }
+
+    .logo img{
+        height: 40px;
+    }
+
+    /* order: logo | button | hamburger */
+    .logo{
+        order: 1;
+    }
+
+    .nav-button{
+        order: 2;
+
+        margin-left: auto;
+        padding: 10px 20px;
+    }
+
+    /* the checkbox stays in the page (so the keyboard can reach it) but is invisible */
+    .nav-toggle{
+        display: block;
+        position: absolute;
+
+        width: 0;
+        height: 0;
+
+        opacity: 0;
+    }
+
+    .nav-toggle-label{
+        order: 3;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        gap: 5px;
+
+        width: 44px;
+        height: 44px;
+
+        background-color: rgba(255, 255, 255, 0.45);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+        cursor: pointer;
+
+        transition: background-color 0.3s ease;
+    }
+
+    .nav-toggle-label:hover{
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    .nav-toggle:focus-visible + .nav-toggle-label{
+        outline: 2px solid #2563eb;
+        outline-offset: 2px;
+    }
+
+    .nav-toggle-label span{
+        display: block;
+
+        width: 20px;
+        height: 2.5px;
+
+        background-color: #0B2A5B;
+        border-radius: 2px;
+
+        transition: transform 0.3s ease,
+                    opacity 0.3s ease;
+    }
+
+    /* hamburger turns into an X when open */
+    .nav-toggle:checked + .nav-toggle-label span:nth-child(1){
+        transform: translateY(7.5px) rotate(45deg);
+    }
+
+    .nav-toggle:checked + .nav-toggle-label span:nth-child(2){
+        opacity: 0;
+    }
+
+    .nav-toggle:checked + .nav-toggle-label span:nth-child(3){
+        transform: translateY(-7.5px) rotate(-45deg);
+    }
+
+    /* dropdown: a second floating glass card under the pill */
+    .nav-links{
+        position: absolute;
+        top: calc(100% + 12px);
+        left: 0;
+
+        width: 100%;
+
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 4px;
+
+        padding: 14px;
+
+        /* nested blur does not work inside a blurred parent, so this card is more opaque */
+        background: rgba(255, 255, 255, 0.92);
+
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        border-radius: 28px;
+
+        box-shadow: 0 20px 40px rgba(15, 39, 71, 0.2),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+
+        transition: opacity 0.3s ease,
+                    transform 0.3s ease,
+                    visibility 0.3s ease;
+    }
+
+    .nav-toggle:checked ~ .nav-links{
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .nav-links a{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 14px 18px;
+
+        border-radius: 18px;
+    }
+
+    .nav-links a i{
+        display: inline-block;
+    }
+
+    .nav-links a::after{
+        display: none;
+    }
+}
+
+@media (max-width: 400px){
+    .logo img{
+        height: 36px;
+    }
+
+    .nav-button{
+        padding: 9px 14px;
+    }
+}
+
+/* respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce){
+    .logo img,
+    .nav-links,
+    .nav-links a,
+    .nav-links a i,
+    .nav-links a::after,
+    .nav-button,
+    .nav-toggle-label,
+    .nav-toggle-label span{
+        transition: none;
+    }
+}
+
+/* respect users who prefer less transparency */
+@media (prefers-reduced-transparency: reduce){
+    .navbar{
+        background: rgba(255, 255, 255, 0.96);
+
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+}
+/******** __--__-- NAVBAR DESIGN 3.0 (LIQUID GLASS) ENDS HERE __--__--********/
+
+/******** __--__-- HERO SECTION DESIGN 3.0 STARTS HERE __--__--********/
 .hero{
-    min-height: 650px;
+    position: relative;
+    overflow: hidden;
+
+    min-height: 100vh;
+    min-height: 100svh;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    padding: 80px 7%;
+    /* fallback first, then the version tied to the navbar size */
+    padding: 150px 7% 110px;
+    padding: calc(var(--nav-h, 70px) + var(--nav-gap, 14px) + 60px) 7% 110px;
 
     background:
-    linear-gradient(
-        135deg, #0f2747, #2563eb
-    );
+        radial-gradient(circle at 20% 20%, rgba(96, 165, 250, 0.35), transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(245, 158, 11, 0.22), transparent 40%),
+        linear-gradient(135deg, #0f2747, #2563eb);
 
     color: #ffffff;
     text-align: center;
 }
 
+/* soft grid pattern */
+.hero::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: radial-gradient(circle at center, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(circle at center, #000 30%, transparent 75%);
+    pointer-events: none;
+}
+
+/* floating glow orb */
+.hero::after{
+    content: "";
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    top: -120px;
+    right: -100px;
+    border-radius: 50%;
+    background: rgba(245, 158, 11, 0.25);
+    filter: blur(90px);
+    animation: float 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* ---------- Animations ---------- */
+@keyframes float{
+    0%, 100%{ transform: translateY(0); }
+    50%{ transform: translateY(30px); }
+}
+
+@keyframes floaty{
+    0%, 100%{ transform: translateY(0) rotate(-5deg); }
+    50%{ transform: translateY(-18px) rotate(5deg); }
+}
+
+@keyframes fadeUp{
+    from{ opacity: 0; transform: translateY(30px); }
+    to{ opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse{
+    0%{ box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+    70%{ box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+    100%{ box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+
+@keyframes scrollDot{
+    0%{ opacity: 0; transform: translate(-50%, 0); }
+    30%{ opacity: 1; }
+    100%{ opacity: 0; transform: translate(-50%, 16px); }
+}
+
 /******** HERO-CONTENT STYLES ********/
 .hero-content{
+    position: relative;
+    z-index: 2;
     max-width: 850px;
 }
 
+/* each piece fades up one after the other */
+.hero-content > *{
+    animation: fadeUp 0.8s ease both;
+}
+
+.hero-content > :nth-child(2){ animation-delay: 0.1s; }
+.hero-content > :nth-child(3){ animation-delay: 0.2s; }
+.hero-content > :nth-child(4){ animation-delay: 0.3s; }
+.hero-content > :nth-child(5){ animation-delay: 0.4s; }
+
 /******** COMING SOON LABEL STYLES ********/
 .coming-soon{
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
 
-    padding: 7px 15px;
+    padding: 8px 18px;
 
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.10);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.35);
 
     color: #ffffff;
-
     letter-spacing: 1.5px;
 
     font-size: 13px;
@@ -141,16 +583,42 @@ button, input{
 
     border-radius: 50px;
 
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
+.coming-soon::before{
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #f59e0b;
+    animation: pulse 1.8s infinite;
+}
+
+/******** HEADING + DESCRIPTION ********/
 .hero h1{
-    font-size: 64px;
-    font-weight: 700;
+    font-size: clamp(36px, 7vw, 68px);
+    font-weight: 800;
 
     margin-bottom: 25px;
 
     line-height: 1.1;
+    letter-spacing: -1px;
+
+    text-shadow: 0 6px 30px rgba(0, 0, 0, 0.25);
+}
+
+.highlight{
+    background: linear-gradient(90deg, #fbbf24, #f59e0b);
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+    /* the parent's shadow would show through the see-through letters */
+    text-shadow: none;
 }
 
 .hero-description{
@@ -159,207 +627,814 @@ button, input{
     font-size: 19px;
     line-height: 1.7;
 
-    margin: 0 auto 35px;
+    margin: 0 auto 38px;
 
     color: rgba(255, 255, 255, 0.85);
 }
 
+/******** HERO BUTTONS ********/
 .hero-buttons{
-   display: flex;
-   justify-content: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 
-    gap: 15px;
+    gap: 16px;
 }
 
 .primary-button{
-    padding: 13px 25px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 
-    color: #ffffff;
-    background-color: #f59e0b;
+    padding: 14px 32px;
+
+    /* dark text on amber is far easier to read than white */
+    color: #0f2747;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
 
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 700;
 
-    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 999px;
 
     cursor: pointer;
 
-    transition:transform 0.3s ease,  
-    background-color 0.3s ease;
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease,
+                gap 0.3s ease;
 }
 
-.primary-button:hover{
-    background-color: #d97706;
+/* arrow that slides on hover */
+.primary-button::after{
+    content: "→";
+}
 
-    transform: translateY(-3px);
+.primary-button:hover,
+.primary-button:focus-visible{
+    transform: translateY(-4px);
+    gap: 12px;
+
+    box-shadow: 0 14px 32px rgba(245, 158, 11, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .secondary-button{
-    padding: 13px 25px;
+    display: inline-flex;
+    align-items: center;
+
+    padding: 14px 32px;
 
     color: #ffffff;
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.10);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
 
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.45);
 
     font-size: 15px;
     font-weight: 600;
 
-    border-radius: 6px;
+    border-radius: 999px;
 
     cursor: pointer;
 
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+
     transition: background-color 0.3s ease,
-    transform 0.3s ease;
+                transform 0.3s ease;
 }
 
-.secondary-button:hover{
-    background-color: rgba(255, 255, 255, 0.12);
-
-    transform: translateY(-3px);
+.secondary-button:hover,
+.secondary-button:focus-visible{
+    background-color: rgba(255, 255, 255, 0.22);
+    transform: translateY(-4px);
 }
-/******** __--__-- HERO SECTION DESIGN ENDS HERE __--__--********/
+
+.primary-button:focus-visible,
+.secondary-button:focus-visible{
+    outline: 2px solid #ffffff;
+    outline-offset: 4px;
+}
+
+/******** FEATURE CHIPS ********/
+.hero-chips{
+    list-style: none;
+
+    margin-top: 46px;
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 12px;
+}
+
+.hero-chips li{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 9px 18px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: rgba(255, 255, 255, 0.92);
+
+    background-color: rgba(255, 255, 255, 0.10);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.hero-chips li i{
+    color: #fbbf24;
+}
+
+/******** FLOATING GLASS ICONS ********/
+.hero-floaters{
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+.floater{
+    position: absolute;
+
+    width: 68px;
+    height: 68px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 26px;
+    color: rgba(255, 255, 255, 0.9);
+
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.06));
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 22px;
+
+    box-shadow: 0 14px 35px rgba(8, 27, 51, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+
+    animation: floaty 7s ease-in-out infinite;
+}
+
+.floater-1{ top: 24%; left: 9%; }
+.floater-2{ top: 62%; left: 15%; animation-delay: -2s; width: 58px; height: 58px; font-size: 22px; }
+.floater-3{ top: 26%; right: 10%; animation-delay: -4s; width: 58px; height: 58px; font-size: 22px; }
+.floater-4{ top: 64%; right: 13%; animation-delay: -1s; }
+
+/******** SCROLL CUE ********/
+.scroll-cue{
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    z-index: 2;
+
+    width: 28px;
+    height: 46px;
+
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+
+    transform: translateX(-50%);
+
+    transition: border-color 0.3s ease;
+}
+
+.scroll-cue:hover,
+.scroll-cue:focus-visible{
+    border-color: #ffffff;
+}
+
+.scroll-cue span{
+    position: absolute;
+    top: 8px;
+    left: 50%;
+
+    width: 4px;
+    height: 8px;
+
+    background-color: #ffffff;
+    border-radius: 4px;
+
+    animation: scrollDot 1.8s ease-in-out infinite;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px){
+    /* floating icons would crowd the text on tablets and phones */
+    .floater{
+        display: none;
+    }
+}
+
+@media (max-width: 768px){
+    .hero{
+        padding: 130px 5% 100px;
+        padding: calc(var(--nav-h, 64px) + var(--nav-gap, 10px) + 50px) 5% 100px;
+    }
+
+    .hero-description{
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 480px){
+    .hero-buttons{
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .primary-button,
+    .secondary-button{
+        justify-content: center;
+    }
+
+    .hero-chips{
+        margin-top: 36px;
+    }
+}
+
+/* respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce){
+    .hero::after,
+    .hero-content > *,
+    .coming-soon::before,
+    .floater,
+    .scroll-cue span{
+        animation: none;
+    }
+
+    .primary-button,
+    .secondary-button,
+    .scroll-cue{
+        transition: none;
+    }
+}
+/******** __--__-- HERO SECTION DESIGN 3.0 ENDS HERE __--__--********/
 
 
-/******** __--__-- BUILDING SECTION DESIGN STARTS HERE __--__--********/
+/******** __--__-- BUILDING SECTION BASE + SHARED HEADINGS STARTS HERE __--__--********/
 .building{
-   padding: 100px 7%;
+    position: relative;
+    overflow: hidden;
 
-   background-color: #ffffff;
+    padding: 120px 7%;
+
+    background:
+        radial-gradient(circle at 10% 15%, rgba(37, 99, 235, 0.10), transparent 40%),
+        radial-gradient(circle at 90% 85%, rgba(124, 58, 237, 0.10), transparent 40%),
+        linear-gradient(180deg, #ffffff 0%, #f5f9ff 100%);
 }
 
+/* soft decorative blobs */
+.building::before,
+.building::after{
+    content: "";
+    position: absolute;
+    z-index: 0;
+
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+
+    pointer-events: none;
+}
+
+.building::before{
+    top: -120px;
+    left: -120px;
+    width: 320px;
+    height: 320px;
+    background: #60a5fa;
+}
+
+.building::after{
+    right: -140px;
+    bottom: -140px;
+    width: 360px;
+    height: 360px;
+    background: #a78bfa;
+}
+
+.building > *{
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------- Shared heading (used by every section) ---------- */
 .section-heading{
     max-width: 750px;
 
-    margin: 0 auto 60px;
+    margin: 0 auto 70px;
 
     text-align: center;
 }
 
 .section-label{
-    margin-bottom: 12px;
+    display: inline-block;
+
+    margin-bottom: 18px;
+    padding: 8px 20px;
 
     font-size: 13px;
     font-weight: 700;
-
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
 
     color: #2563eb;
+
+    background: rgba(37, 99, 235, 0.08);
+    border: 1px solid rgba(37, 99, 235, 0.25);
+    border-radius: 50px;
+
+    backdrop-filter: blur(6px);
 }
 
 .section-heading h2{
-    margin-bottom: 18px;
+    position: relative;
 
-    font-size: 40px;
+    margin-bottom: 28px;
+    padding-bottom: 22px;
+
+    font-size: 46px;
+    font-weight: 800;
     line-height: 1.2;
+    letter-spacing: -0.5px;
 
-    color: #0f2747;
+    background: linear-gradient(90deg, #0f2747 0%, #2563eb 60%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
 }
 
-.section-heading>p:last-child{
-    font-size: 17px;
+/* gradient underline under heading */
+.section-heading h2::after{
+    content: "";
+
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+
+    width: 80px;
+    height: 4px;
+
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+    border-radius: 10px;
+
+    transform: translateX(-50%);
+    transition: width 0.4s ease;
+}
+
+.section-heading:hover h2::after{
+    width: 140px;
+}
+
+.section-heading > p:last-child{
+    font-size: 18px;
+    line-height: 1.8;
 
     color: #64748b;
-
-    line-height: 1.7;
 }
+/******** __--__-- BUILDING SECTION BASE + SHARED HEADINGS ENDS HERE __--__--********/
 
+
+/******** __--__-- BUILDING SECTION DESIGN 3.0 CARDS STARTS HERE __--__--********/
+
+/* ---------- Grid ---------- */
 .building-cards{
     display: grid;
-
     grid-template-columns: repeat(2, 1fr);
 
-    gap: 25px;
+    gap: 30px;
 
     max-width: 1000px;
-
     margin: 0 auto;
 }
 
+/* ---------- Cards ---------- */
 .building-card{
-    padding: 35px;
+    --accent: #2563eb;
+    --accent-2: #60a5fa;
+    --accent-rgb: 37, 99, 235;
 
-    background-color: #f4f8fc;
+    position: relative;
+    overflow: hidden;
 
-    border: 1px solid #e5eaf0;
+    padding: 48px 38px 42px;
 
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.88);
 
-    transition: transform 0.3s,
-    box-shadow 0.3s ease;
+    border: 1px solid rgba(var(--accent-rgb), 0.15);
+    border-radius: 24px;
+
+    box-shadow: 0 4px 20px rgba(15, 39, 71, 0.05);
+
+    transition: transform 0.4s ease,
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
 }
 
-.building-card:hover{
-    transform: translateY(-5px);
-
-    box-shadow: 0 10px 30px rgba(15, 39, 71, 0.1);
+.building-card:nth-child(2){
+    --accent: #7c3aed;
+    --accent-2: #c084fc;
+    --accent-rgb: 124, 58, 237;
 }
 
+.building-card:nth-child(3){
+    --accent: #0f9d9a;
+    --accent-2: #2dd4bf;
+    --accent-rgb: 15, 157, 154;
+}
+
+.building-card:nth-child(4){
+    --accent: #d97706;
+    --accent-2: #fbbf24;
+    --accent-rgb: 217, 119, 6;
+}
+
+/* accent bar along the top */
+.building-card::before{
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 5px;
+
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+
+    transform: scaleX(0.25);
+    transform-origin: left;
+
+    transition: transform 0.5s ease;
+}
+
+/* corner glow */
+.building-card::after{
+    content: "";
+
+    position: absolute;
+    top: -70px;
+    right: -70px;
+
+    width: 200px;
+    height: 200px;
+
+    background: radial-gradient(circle, rgba(var(--accent-rgb), 0.16), transparent 70%);
+
+    opacity: 0.5;
+
+    pointer-events: none;
+
+    transition: opacity 0.4s ease,
+                transform 0.6s ease;
+}
+
+/* keep content above the effects */
+.building-card > *{
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------- Big faded number ---------- */
+.building-number{
+    position: absolute;
+    top: 22px;
+    right: 28px;
+
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -2px;
+
+    color: rgba(var(--accent-rgb), 0.10);
+
+    user-select: none;
+
+    transition: color 0.4s ease,
+                transform 0.4s ease;
+}
+
+/* ---------- Icon tile ---------- */
+.building-icon{
+    width: 68px;
+    height: 68px;
+
+    margin-bottom: 26px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 28px;
+    color: #ffffff;
+
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+
+    box-shadow: 0 12px 28px rgba(var(--accent-rgb), 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+
+    transition: transform 0.4s ease,
+                box-shadow 0.4s ease;
+}
+
+/* ---------- Text ---------- */
 .building-card h3{
     margin-bottom: 12px;
 
-    font-size: 22px;
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.3;
 
     color: #0f2747;
+
+    transition: color 0.3s ease;
 }
 
 .building-card p{
-    font-size: 15px;
-
-    line-height: 1.7;
+    font-size: 16px;
+    line-height: 1.8;
 
     color: #64748b;
 }
-/******** __--__-- BUILDING SECTION DESIGN ENDS HERE __--__--********/
 
+/* ---------- Hover (mouse devices only) ---------- */
+@media (hover: hover){
+    .building-card:hover{
+        transform: translateY(-10px);
 
-/******** __--__-- HOW IT WORKS SECTION DESIGN STARTS HERE __--__--********/
-.how-it-works{
-    padding: 100px 7%;
+        border-color: rgba(var(--accent-rgb), 0.4);
 
-    background-color: #f4f8fc;
+        box-shadow: 0 28px 55px rgba(var(--accent-rgb), 0.2),
+                    0 8px 20px rgba(15, 39, 71, 0.08);
+    }
+
+    .building-card:hover::before{
+        transform: scaleX(1);
+    }
+
+    .building-card:hover::after{
+        opacity: 1;
+        transform: scale(1.3);
+    }
+
+    .building-card:hover .building-icon{
+        transform: translateY(-3px) rotate(-6deg) scale(1.08);
+
+        box-shadow: 0 16px 34px rgba(var(--accent-rgb), 0.45),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .building-card:hover .building-number{
+        color: rgba(var(--accent-rgb), 0.18);
+
+        transform: translateY(-4px);
+    }
+
+    .building-card:hover h3{
+        color: var(--accent);
+    }
 }
 
+/* ---------- Responsive ---------- */
+@media (max-width: 768px){
+    .building{
+        padding: 80px 5%;
+    }
+
+    .section-heading h2{
+        font-size: 34px;
+    }
+
+    .building-cards{
+        grid-template-columns: 1fr;
+
+        max-width: 520px;
+    }
+
+    .building-card{
+        padding: 42px 28px 36px;
+    }
+
+    .building-number{
+        font-size: 52px;
+    }
+}
+
+/* respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce){
+    .building-card,
+    .building-card::before,
+    .building-card::after,
+    .building-icon,
+    .building-number,
+    .building-card h3,
+    .section-heading h2::after{
+        transition: none;
+    }
+}
+/******** __--__-- BUILDING SECTION DESIGN 3.0 CARDS ENDS HERE __--__--********/
+
+
+/******** __--__-- HOW IT WORKS SECTION DESIGN 3.0 STARTS HERE __--__--********/
+/* Replace the whole "HOW IT WORKS SECTION DESIGN 2.0" block with this one. */
+
+.how-it-works{
+    position: relative;
+    overflow: hidden;
+
+    padding: 120px 7%;
+
+    background:
+        radial-gradient(circle at 85% 10%, rgba(37, 99, 235, 0.10), transparent 40%),
+        radial-gradient(circle at 10% 90%, rgba(124, 58, 237, 0.10), transparent 40%),
+        linear-gradient(180deg, #f4f8fc 0%, #eaf1fb 100%);
+}
+
+/* soft decorative blobs */
+.how-it-works::before,
+.how-it-works::after{
+    content: "";
+    position: absolute;
+    z-index: 0;
+
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+
+    pointer-events: none;
+}
+
+.how-it-works::before{
+    top: -120px;
+    right: -120px;
+
+    width: 320px;
+    height: 320px;
+
+    background: #60a5fa;
+}
+
+.how-it-works::after{
+    bottom: -140px;
+    left: -140px;
+
+    width: 340px;
+    height: 340px;
+
+    background: #a78bfa;
+}
+
+.how-it-works > *{
+    position: relative;
+    z-index: 1;
+}
+
+/* keeps the heading's margin from collapsing into or overlapping the steps */
+.how-it-works .section-heading{
+    display: flow-root;
+    margin-bottom: 80px;
+}
+
+/* ---------- Steps ---------- */
 .steps{
+    --step-gap: 56px;
+    --step-pad-top: 48px;
+    --icon-size: 76px;
+
+    /* the numbers 01 / 02 / 03 come from a counter, so no extra HTML is needed */
+    counter-reset: step;
+
     max-width: 1100px;
 
-    margin: 0  auto;
+    margin: 0 auto;
 
     display: grid;
+    grid-template-columns: repeat(3, 1fr);
 
-    grid-template-columns: repeat(3,1fr);
-
-    gap: 40px;
+    gap: var(--step-gap);
 }
 
 .step{
+    counter-increment: step;
+
     position: relative;
 
-    padding: 30px;
+    padding: var(--step-pad-top) 32px 42px;
 
     text-align: center;
 
-    background-color: #ffffff;
+    background: rgba(255, 255, 255, 0.85);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
 
-    border-radius: 12px;
+    border: 1px solid rgba(37, 99, 235, 0.12);
+    border-radius: 22px;
 
-    border: 1px solid #e5eaf0;
+    box-shadow: 0 4px 20px rgba(15, 39, 71, 0.05);
 
-    transition: transform 0.3s ease,
-    box-shadow 0.3s ease;
+    transition: transform 0.4s ease,
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
 }
 
-.step:hover{
-    transform: translateY(-5px);
+/* large faded step number in the corner */
+.step::before{
+    content: "0" counter(step);
 
-    box-shadow: 0 10px 30px rgba(15, 39, 71, 0.1);
+    position: absolute;
+    top: 14px;
+    right: 22px;
+
+    font-size: 54px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -2px;
+
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.22), rgba(124, 58, 237, 0.22));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+    pointer-events: none;
+    user-select: none;
+
+    transition: transform 0.4s ease;
 }
 
+/* dashed connector with an arrow head, sitting in the gap at icon height */
+.step:not(:last-child)::after{
+    content: "";
+
+    position: absolute;
+    top: calc(var(--step-pad-top) + var(--icon-size) / 2 - 1px);
+    right: calc(-1 * var(--step-gap));
+
+    width: var(--step-gap);
+    height: 2px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #2563eb 0,
+            #2563eb 6px,
+            transparent 6px,
+            transparent 12px
+        );
+
+    opacity: 0.5;
+
+    /* trims the last dash so it does not touch the arrow */
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 10px), transparent calc(100% - 10px));
+    mask-image: linear-gradient(90deg, #000 calc(100% - 10px), transparent calc(100% - 10px));
+}
+
+.step:hover,
+.step:focus-within{
+    transform: translateY(-8px);
+
+    border-color: rgba(37, 99, 235, 0.35);
+
+    box-shadow: 0 25px 50px rgba(37, 99, 235, 0.18),
+                0 8px 20px rgba(15, 39, 71, 0.08);
+}
+
+.step:hover::before{
+    transform: scale(1.08);
+}
+
+/* ---------- Icon ---------- */
 .step-number{
-    width: 60px;
-    height: 60px;
+    position: relative;
 
-    margin: 0 auto 20px;
+    width: var(--icon-size);
+    height: var(--icon-size);
+
+    margin: 0 auto 30px;
 
     display: flex;
     align-items: center;
@@ -367,459 +1442,1926 @@ button, input{
 
     border-radius: 50%;
 
-    background-color: #2563eb;
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
 
     color: #ffffff;
 
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 26px;
+
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+
+    transition: transform 0.4s ease,
+                box-shadow 0.4s ease;
 }
 
-.step h3{
-    font-size: 15px;
+/* dashed ring around the icon */
+.step-number::before{
+    content: "";
 
-    line-height: 1.7;
+    position: absolute;
+    inset: -9px;
+
+    border: 2px dashed rgba(37, 99, 235, 0.35);
+    border-radius: 50%;
+
+    transition: transform 0.8s ease,
+                border-color 0.4s ease;
+}
+
+.step:hover .step-number{
+    transform: scale(1.08);
+
+    box-shadow: 0 14px 35px rgba(124, 58, 237, 0.45);
+}
+
+.step:hover .step-number::before{
+    transform: rotate(180deg);
+
+    border-color: rgba(124, 58, 237, 0.6);
+}
+
+/* ---------- Text ---------- */
+.step h3{
+    margin-bottom: 12px;
+
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.3;
 
     color: #0f2747;
+
+    transition: color 0.3s ease;
+}
+
+.step:hover h3{
+    color: #2563eb;
 }
 
 .step p{
-    font-size: 15px;
+    max-width: 30ch;
 
-    line-height: 1.7;
+    margin: 0 auto;
 
-    color: #64748b;
+    font-size: 16px;
+    line-height: 1.75;
+
+    color: #5b6b82;
 }
-/******** __--__-- HOW IT WORKS SECTION DESIGN ENDS HERE __--__--********/
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1000px){
+    .steps{
+        --step-gap: 40px;
+    }
+
+    .step{
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}
+
+@media (max-width: 900px){
+    .steps{
+        --step-gap: 56px;
+
+        grid-template-columns: 1fr;
+
+        max-width: 480px;
+    }
+
+    /* connector becomes vertical, centred under the card */
+    .step:not(:last-child)::after{
+        top: auto;
+        right: auto;
+        bottom: calc(-1 * var(--step-gap));
+        left: 50%;
+
+        width: 2px;
+        height: var(--step-gap);
+
+        margin-left: -1px;
+
+        background:
+            repeating-linear-gradient(
+                180deg,
+                #2563eb 0,
+                #2563eb 6px,
+                transparent 6px,
+                transparent 12px
+            );
+
+        -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 10px), transparent calc(100% - 10px));
+        mask-image: linear-gradient(180deg, #000 calc(100% - 10px), transparent calc(100% - 10px));
+    }
+
+    .step p{
+        max-width: 36ch;
+    }
+}
+
+@media (max-width: 768px){
+    .how-it-works{
+        padding: 80px 5%;
+    }
+
+    .how-it-works .section-heading{
+        margin-bottom: 60px;
+    }
+}
+
+/* respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce){
+    .step,
+    .step::before,
+    .step-number,
+    .step-number::before,
+    .step h3{
+        transition: none;
+    }
+}
+/******** __--__-- HOW IT WORKS SECTION DESIGN 3.0 ENDS HERE __--__--********/
 
 
-/******** __--__-- CATEGORIES SECTION DESIGN STARTS HERE __--__--********/
+/******** __--__-- CATEGORIES SECTION DESIGN 3.0 STARTS HERE __--__--********/
+/* Replace the whole "CATEGORIES SECTION DESIGN 2.0" block with this one.
+   Works with your current HTML (icon + <br> inside the h3), no markup changes required. */
+
 .categories{
-    padding: 100px 7%;
+    position: relative;
+    overflow: hidden;
 
-    background-color: #ffffff;
+    padding: 120px 7%;
+
+    background:
+        radial-gradient(circle at 12% 12%, rgba(37, 99, 235, 0.10), transparent 40%),
+        radial-gradient(circle at 88% 88%, rgba(124, 58, 237, 0.10), transparent 40%),
+        linear-gradient(180deg, #ffffff 0%, #f5f9ff 100%);
 }
 
+/* soft decorative blobs */
+.categories::before,
+.categories::after{
+    content: "";
+    position: absolute;
+    z-index: 0;
+
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+
+    pointer-events: none;
+}
+
+.categories::before{
+    top: -120px;
+    right: -120px;
+
+    width: 320px;
+    height: 320px;
+
+    background: #60a5fa;
+}
+
+.categories::after{
+    bottom: -140px;
+    left: -140px;
+
+    width: 340px;
+    height: 340px;
+
+    background: #a78bfa;
+}
+
+.categories > *{
+    position: relative;
+    z-index: 1;
+}
+
+/* contains the heading's margin so it can never collide with the grid */
+.categories .section-heading{
+    display: flow-root;
+    margin-bottom: 70px;
+}
+
+/* ---------- Grid ---------- */
 .category-grid{
     max-width: 1100px;
 
     margin: 0 auto;
 
     display: grid;
-
     grid-template-columns: repeat(5, 1fr);
 
-    gap: 18px;
+    gap: 20px;
 }
 
+/* ---------- Cards ---------- */
 .category-card{
-    min-height: 160px;
+    /* each card gets one of four accents from the site palette */
+    --accent: #2563eb;
+    --accent-2: #60a5fa;
+    --accent-rgb: 37, 99, 235;
 
-    padding: 25px 20px;
+    position: relative;
+    overflow: hidden;
+
+    min-height: 210px;
+
+    padding: 30px 24px 28px;
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
 
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.85);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
 
-    background-color: #f4f8fc;
+    border: 1px solid rgba(var(--accent-rgb), 0.14);
+    border-radius: 18px;
 
-    border: 1px solid #e5eaf0;
+    box-shadow: 0 4px 20px rgba(15, 39, 71, 0.05);
 
-    transition: transform 0.3s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease;
+    transition: transform 0.4s ease,
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
+}
+
+.category-card:nth-child(4n+2){
+    --accent: #7c3aed;
+    --accent-2: #c084fc;
+    --accent-rgb: 124, 58, 237;
+}
+
+.category-card:nth-child(4n+3){
+    --accent: #0f9d9a;
+    --accent-2: #2dd4bf;
+    --accent-rgb: 15, 157, 154;
+}
+
+.category-card:nth-child(4n+4){
+    --accent: #d97706;
+    --accent-2: #fbbf24;
+    --accent-rgb: 217, 119, 6;
+}
+
+/* soft tint that rises from the bottom on hover */
+.category-card::before{
+    content: "";
+
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    background: linear-gradient(160deg, rgba(var(--accent-rgb), 0.06), rgba(var(--accent-rgb), 0.14));
+
+    opacity: 0;
+    transform: translateY(40%);
+
+    transition: opacity 0.4s ease,
+                transform 0.5s ease;
+}
+
+/* accent bar along the bottom */
+.category-card::after{
+    content: "";
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+
+    width: 100%;
+    height: 4px;
+
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+
+    transform: scaleX(0);
+    transform-origin: left;
+
+    transition: transform 0.5s ease;
 }
 
 .category-card:hover{
-    transform: translateY(-6px);
+    transform: translateY(-8px);
 
-    border-color: #2563eb;
+    border-color: rgba(var(--accent-rgb), 0.4);
 
-    box-shadow: 0 10px 25px rgba(15, 39, 71, 0.1);
+    box-shadow: 0 25px 50px rgba(var(--accent-rgb), 0.18),
+                0 8px 20px rgba(15, 39, 71, 0.08);
 }
 
-.category-card h3{
-    margin-bottom: 8px;
+.category-card:hover::before{
+    opacity: 1;
+    transform: translateY(0);
+}
 
-    font-size: 18px;
+.category-card:hover::after{
+    transform: scaleX(1);
+}
+
+/* keep text above the effects */
+.category-card h3,
+.category-card p{
+    position: relative;
+    z-index: 2;
+}
+
+/* ---------- Title + icon badge ---------- */
+.category-card h3{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 18px;
+
+    margin-bottom: 10px;
+
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.3;
 
     color: #0f2747;
+
+    transition: color 0.3s ease;
+}
+
+/* the <br> in your HTML is no longer needed, the flex gap does the spacing */
+.category-card h3 br{
+    display: none;
+}
+
+.category-card h3 i{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    width: 54px;
+    height: 54px;
+
+    font-size: 22px;
+
+    color: var(--accent);
+
+    background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.16), rgba(var(--accent-rgb), 0.05));
+    border: 1px solid rgba(var(--accent-rgb), 0.22);
+    border-radius: 16px;
+
+    transition: transform 0.4s ease,
+                color 0.3s ease,
+                background 0.3s ease,
+                box-shadow 0.4s ease;
+}
+
+.category-card:hover h3{
+    color: var(--accent);
+}
+
+/* badge fills with the accent colour on hover */
+.category-card:hover h3 i{
+    color: #ffffff;
+
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+
+    transform: scale(1.08) rotate(-4deg);
+
+    box-shadow: 0 10px 22px rgba(var(--accent-rgb), 0.35);
 }
 
 .category-card p{
-    font-size: 14px;
+    font-size: 15px;
+    line-height: 1.7;
 
-    line-height: 1.6;
-
-    color: #64748b;
+    color: #5b6b82;
 }
-/******** __--__-- CATEGORIES SECTION DESIGN ENDS HERE __--__--********/
 
-/******** __--__-- CUSTOMER & WORKER SECTION DESIGN STARTS HERE __--__--********/
+/* ---------- Responsive ---------- */
+/* 10 cards: 5 columns, or 2 columns. Three columns would leave one card alone on the last row. */
+@media (max-width: 1100px){
+    .category-grid{
+        grid-template-columns: repeat(2, 1fr);
+
+        max-width: 760px;
+    }
+
+    .category-card{
+        min-height: auto;
+    }
+
+    /* with wider cards, put the icon beside the title */
+    .category-card h3{
+        flex-direction: row;
+        align-items: center;
+
+        gap: 16px;
+    }
+}
+
+@media (max-width: 768px){
+    .categories{
+        padding: 80px 5%;
+    }
+
+    .categories .section-heading{
+        margin-bottom: 55px;
+    }
+}
+
+@media (max-width: 560px){
+    .category-grid{
+        grid-template-columns: 1fr;
+
+        max-width: 460px;
+    }
+}
+
+/* respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce){
+    .category-card,
+    .category-card::before,
+    .category-card::after,
+    .category-card h3,
+    .category-card h3 i{
+        transition: none;
+    }
+}
+/******** __--__-- CATEGORIES SECTION DESIGN 3.0 ENDS HERE __--__--********/
+
+
+/******** __--__-- CUSTOMER & WORKER SECTION DESIGN 3.0 STARTS HERE __--__--********/
+/* Replace the whole "CUSTOMER & WORKER SECTION DESIGN 2.0" block with this one.
+   Works with your current HTML. The .user-features list is optional (see notes). */
+
 .users{
-    padding: 100px 7%;
+    position: relative;
+    overflow: hidden;
 
-    background-color: #f4f8fc;
+    padding: 120px 7%;
+
+    background:
+        radial-gradient(circle at 85% 10%, rgba(37, 99, 235, 0.10), transparent 40%),
+        radial-gradient(circle at 10% 90%, rgba(124, 58, 237, 0.10), transparent 40%),
+        linear-gradient(180deg, #f4f8fc 0%, #eaf1fb 100%);
 }
 
+/* soft decorative blobs */
+.users::before,
+.users::after{
+    content: "";
+    position: absolute;
+    z-index: 0;
+
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+
+    pointer-events: none;
+}
+
+.users::before{
+    top: -120px;
+    left: -120px;
+
+    width: 320px;
+    height: 320px;
+
+    background: #60a5fa;
+}
+
+.users::after{
+    right: -140px;
+    bottom: -140px;
+
+    width: 340px;
+    height: 340px;
+
+    background: #a78bfa;
+}
+
+.users > *{
+    position: relative;
+    z-index: 1;
+}
+
+/* contains the heading's margin so it can never collide with the cards */
+.users .section-heading{
+    display: flow-root;
+    margin-bottom: 70px;
+}
+
+/* ---------- Grid ---------- */
 .user-cards{
-    max-width: 1100px;
+    max-width: 1000px;
 
     margin: 0 auto;
 
     display: grid;
-
     grid-template-columns: repeat(2, 1fr);
 
-    gap: 30px;
+    gap: 35px;
 }
 
+/* ---------- Cards ---------- */
 .user-card{
-    padding: 45px 35px;
+    --accent: #2563eb;
+    --accent-2: #60a5fa;
+    --accent-rgb: 37, 99, 235;
+
+    position: relative;
+    overflow: hidden;
+
+    /* column layout keeps both buttons on the same line, even if the text lengths differ */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 56px 40px 48px;
 
     text-align: center;
 
-    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.85);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
 
-    background-color: #ffffff;
+    border: 1px solid rgba(var(--accent-rgb), 0.16);
+    border-radius: 24px;
 
-    border: 1px solid #e5eaf0;
+    box-shadow: 0 4px 20px rgba(15, 39, 71, 0.05);
 
-    transition: transform 0.3s ease,
-    box-shadow 0.3s ease;
+    transition: transform 0.4s ease,
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
 }
 
-.user-card:hover{
-    transform: translateY(-6px);
-
-    box-shadow: 0 15px 35px rgba(15, 39, 71, 0.12);
+/* second card (worker) gets the purple accent */
+.user-card:nth-child(2){
+    --accent: #7c3aed;
+    --accent-2: #c084fc;
+    --accent-rgb: 124, 58, 237;
 }
 
+/* top accent bar */
+.user-card::before{
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 5px;
+
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+
+    transform: scaleX(0.25);
+    transform-origin: center;
+
+    transition: transform 0.5s ease;
+}
+
+/* corner glow */
+.user-card::after{
+    content: "";
+
+    position: absolute;
+    top: -80px;
+    right: -80px;
+
+    width: 220px;
+    height: 220px;
+
+    background: radial-gradient(circle, rgba(var(--accent-rgb), 0.18), transparent 70%);
+
+    opacity: 0.5;
+
+    pointer-events: none;
+
+    transition: opacity 0.4s ease,
+                transform 0.6s ease;
+}
+
+.user-card:hover,
+.user-card:focus-within{
+    transform: translateY(-8px);
+
+    border-color: rgba(var(--accent-rgb), 0.4);
+
+    box-shadow: 0 30px 60px rgba(var(--accent-rgb), 0.2),
+                0 8px 20px rgba(15, 39, 71, 0.08);
+}
+
+.user-card:hover::before,
+.user-card:focus-within::before{
+    transform: scaleX(1);
+}
+
+.user-card:hover::after,
+.user-card:focus-within::after{
+    opacity: 1;
+    transform: scale(1.3);
+}
+
+/* keep content above the effects */
+.user-card > *{
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------- Icon ---------- */
 .user-icon{
-    width: 70px;
-    height: 70px;
+    position: relative;
 
-    margin: 0 auto 25px;
+    width: 84px;
+    height: 84px;
+
+    margin: 0 auto 32px;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    background-color: #eaf2ff;
+    /* the icon now takes the card's accent colour instead of inheriting navy */
+    color: var(--accent);
 
+    background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.14), rgba(var(--accent-rgb), 0.04));
+
+    border: 1px solid rgba(var(--accent-rgb), 0.22);
     border-radius: 50%;
 
-    font-size: 30px;
+    font-size: 34px;
+
+    box-shadow: 0 10px 25px rgba(var(--accent-rgb), 0.15);
+
+    transition: transform 0.4s ease,
+                color 0.3s ease,
+                background 0.3s ease,
+                box-shadow 0.4s ease;
 }
 
+/* dashed ring around the icon */
+.user-icon::before{
+    content: "";
+
+    position: absolute;
+    inset: -9px;
+
+    border: 2px dashed rgba(var(--accent-rgb), 0.35);
+    border-radius: 50%;
+
+    transition: transform 0.8s ease;
+}
+
+/* icon fills with the accent colour on hover */
+.user-card:hover .user-icon,
+.user-card:focus-within .user-icon{
+    color: #ffffff;
+
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+
+    transform: scale(1.08);
+
+    box-shadow: 0 14px 35px rgba(var(--accent-rgb), 0.4);
+}
+
+.user-card:hover .user-icon::before,
+.user-card:focus-within .user-icon::before{
+    transform: rotate(180deg);
+}
+
+/* ---------- Text ---------- */
 .user-card h3{
-    margin-bottom: 15px;
+    max-width: 18ch;
 
-    font-size: 24px;
+    margin: 0 auto 16px;
 
-    line-height: 1.3;
+    font-size: 27px;
+    font-weight: 800;
+    line-height: 1.25;
 
     color: #0f2747;
+
+    transition: color 0.3s ease;
+}
+
+.user-card:hover h3,
+.user-card:focus-within h3{
+    color: var(--accent);
 }
 
 .user-card p{
-    margin-bottom: 25px;
+    max-width: 40ch;
 
-    font-size: 15px;
+    margin: 0 auto 28px;
 
-    line-height: 1.7;
+    font-size: 16px;
+    line-height: 1.8;
 
-    color: #64748b;
+    color: #5b6b82;
 }
 
+/* ---------- Optional checklist ---------- */
+.user-features{
+    list-style: none;
+
+    width: 100%;
+    max-width: 340px;
+
+    margin: 0 auto 34px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    text-align: left;
+}
+
+.user-features li{
+    display: flex;
+    align-items: flex-start;
+
+    gap: 12px;
+
+    font-size: 15px;
+    line-height: 1.5;
+
+    color: #3b4a61;
+}
+
+/* tick in a small tinted circle, no icon font needed */
+.user-features li::before{
+    content: "\2713";
+
+    flex-shrink: 0;
+
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 1px;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    color: var(--accent);
+
+    background: rgba(var(--accent-rgb), 0.12);
+    border-radius: 50%;
+}
+
+/* ---------- Button ---------- */
 .user-button{
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 
-    padding: 11px 22px;
+    /* pins the button to the bottom of the card so both line up */
+    margin-top: auto;
 
-    background-color: #2563eb;
+    padding: 14px 30px;
+
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
 
     color: #ffffff;
 
-    border-radius: 6px;
+    border-radius: 50px;
 
-    font-size: 14px;
-
+    font-size: 15px;
     font-weight: 600;
 
-    transition: background-color 0.3s ease,
-    transform 0.3s ease;
+    box-shadow: 0 8px 20px rgba(var(--accent-rgb), 0.3);
+
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease,
+                gap 0.3s ease;
 }
 
-.user-button:hover{
-    background-color: #1d4ed8;
+/* arrow that slides on hover */
+.user-button::after{
+    content: "\2192";
 
-    transform: translateY(-2px);
+    transition: transform 0.3s ease;
 }
-/******** __--__-- CUSTOMER & WORKER SECTION DESIGN ENDS HERE __--__--********/
+
+.user-button:hover,
+.user-button:focus-visible{
+    transform: translateY(-3px);
+
+    gap: 12px;
+
+    box-shadow: 0 14px 30px rgba(var(--accent-rgb), 0.45);
+}
+
+.user-button:hover::after,
+.user-button:focus-visible::after{
+    transform: translateX(3px);
+}
+
+.user-button:focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+.user-button:active{
+    transform: translateY(0);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 850px){
+    .user-cards{
+        grid-template-columns: 1fr;
+
+        max-width: 520px;
+    }
+}
+
+@media (max-width: 768px){
+    .users{
+        padding: 80px 5%;
+    }
+
+    .users .section-heading{
+        margin-bottom: 55px;
+    }
+
+    .user-card{
+        padding: 46px 26px 40px;
+    }
+
+    .user-card h3{
+        font-size: 24px;
+    }
+}
+
+/* respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce){
+    .user-card,
+    .user-card::before,
+    .user-card::after,
+    .user-card h3,
+    .user-icon,
+    .user-icon::before,
+    .user-button,
+    .user-button::after{
+        transition: none;
+    }
+}
+/******** __--__-- CUSTOMER & WORKER SECTION DESIGN 3.0 ENDS HERE __--__--********/
 
 
-/******** __--__-- STAY TUNED SECTION DESIGN STARTS HERE __--__--********/
+/******** __--__-- STAY TUNED SECTION DESIGN 3.0 STARTS HERE __--__--********/
+/* Replace the whole "STAY TUNED SECTION DESIGN 2.0" block with this one.
+   Works with your current HTML. .form-note and .form-message are optional (see notes). */
+
 .stay-tuned{
-    padding: 100px 7%;
+    position: relative;
+    overflow: hidden;
 
-    background-color: #0f2747;
+    padding: 120px 7%;
+
+    background:
+        radial-gradient(circle at 12% 15%, rgba(37, 99, 235, 0.28), transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(124, 58, 237, 0.22), transparent 40%),
+        linear-gradient(180deg, #0f2747 0%, #0b1f3a 100%);
 
     color: #ffffff;
 
     text-align: center;
 }
 
+/* soft decorative blobs, same as the light sections */
+.stay-tuned::before,
+.stay-tuned::after{
+    content: "";
+    position: absolute;
+    z-index: 0;
+
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.2;
+
+    pointer-events: none;
+}
+
+.stay-tuned::before{
+    top: -140px;
+    right: -120px;
+
+    width: 320px;
+    height: 320px;
+
+    background: #60a5fa;
+}
+
+.stay-tuned::after{
+    bottom: -160px;
+    left: -140px;
+
+    width: 340px;
+    height: 340px;
+
+    background: #a78bfa;
+}
+
 .stay-tuned-content{
+    position: relative;
+    z-index: 1;
+
     max-width: 700px;
 
     margin: 0 auto;
 }
 
+/* ---------- Label ---------- */
 .stay-tuned .section-label{
-    color: #60a5fa;
+    display: inline-block;
+
+    margin-bottom: 18px;
+    padding: 8px 20px;
+
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+
+    color: #93c5fd;
+
+    background: rgba(96, 165, 250, 0.12);
+    border: 1px solid rgba(96, 165, 250, 0.35);
+    border-radius: 50px;
 }
 
+/* ---------- Heading ---------- */
 .stay-tuned h2{
-    margin-bottom: 18px;
+    position: relative;
 
-    font-size: 42px;
+    margin-bottom: 30px;
+    padding-bottom: 22px;
 
+    font-size: 46px;
+    font-weight: 800;
     line-height: 1.2;
+    letter-spacing: -0.5px;
 
     color: #ffffff;
 }
 
-.stay-tuned-content>p:not(.section-label){
-    margin-bottom: 30px;
+/* same blue-purple underline as the other headings */
+.stay-tuned h2::after{
+    content: "";
 
-    font-size: 17px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
 
-    line-height: 1.7;
+    width: 80px;
+    height: 4px;
 
-    color: rgba(255, 255, 255, 0.75);
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+    border-radius: 10px;
+
+    transform: translateX(-50%);
 }
 
+.stay-tuned-content > p:not(.section-label):not(.form-note):not(.form-message){
+    max-width: 600px;
+
+    margin: 0 auto 40px;
+
+    font-size: 18px;
+    line-height: 1.8;
+
+    color: rgba(255, 255, 255, 0.78);
+}
+
+/* ---------- Form ---------- */
 .notify-form{
     max-width: 600px;
 
     margin: 0 auto;
+    padding: 10px;
 
     display: flex;
-
     gap: 10px;
+
+    background-color: rgba(255, 255, 255, 0.07);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 18px;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+    transition: border-color 0.3s ease,
+                box-shadow 0.3s ease;
 }
 
+.notify-form:focus-within{
+    border-color: rgba(96, 165, 250, 0.7);
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3),
+                0 0 0 3px rgba(96, 165, 250, 0.2);
+}
+
+/* envelope icon drawn inside the field, so no extra HTML is needed */
 .notify-form input{
     flex: 1;
-
     min-width: 0;
 
-    padding: 14px 18px;
+    padding: 16px 20px 16px 52px;
+
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='m3 7 9 6 9-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 18px center;
 
     border: none;
-
-    border-radius: 6px;
+    border-radius: 12px;
 
     outline: none;
 
-    font-size: 15px;
-
+    font-size: 16px; /* 16px stops iOS from zooming in on focus */
     color: #0f2747;
+
+    transition: box-shadow 0.3s ease;
 }
 
+.notify-form input::placeholder{
+    color: #8a99ad;
+}
+
+/* red ring only after the person has typed something invalid */
+.notify-form input:user-invalid{
+    box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.55);
+}
+
+/* ---------- Button (same style as .user-button) ---------- */
 .notify-form button{
-    padding: 14px 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 16px 30px;
+
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
 
     border: none;
-
-    background-color: #f59e0b;
+    border-radius: 12px;
 
     color: #ffffff;
 
-    border-radius: 6px;
-
     font-size: 15px;
-
     font-weight: 600;
+    white-space: nowrap;
 
-    transition: background-color 0.3s ease,
-    transform 0.3s ease;
+    cursor: pointer;
+
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease,
+                gap 0.3s ease;
 }
 
-.notify-form button:hover{
-    background-color: #d97706;
-
-    transform: translateY(-2px);
+/* arrow that slides on hover */
+.notify-form button::after{
+    content: "\2192";
 }
-/******** __--__-- STAY TUNED SECTION DESIGN ENDS HERE __--__--********/
 
+.notify-form button:hover,
+.notify-form button:focus-visible{
+    transform: translateY(-3px);
 
-/******** __--__-- FINAL CTA SECTION DESIGN STARTS HERE __--__--********/
+    gap: 12px;
+
+    box-shadow: 0 14px 28px rgba(124, 58, 237, 0.45);
+}
+
+.notify-form button:focus-visible{
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+}
+
+.notify-form button:active{
+    transform: translateY(0);
+}
+
+/* ---------- Optional: small note + success message ---------- */
+.stay-tuned .form-note{
+    margin: 18px auto 0;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.stay-tuned .form-message{
+    min-height: 1.6em;
+
+    margin: 18px auto 0;
+
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.6;
+
+    color: #86efac;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px){
+    .stay-tuned{
+        padding: 80px 5%;
+    }
+
+    .stay-tuned h2{
+        font-size: 34px;
+    }
+
+    .stay-tuned-content > p:not(.section-label):not(.form-note):not(.form-message){
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 560px){
+    .notify-form{
+        flex-direction: column;
+    }
+
+    .notify-form button{
+        width: 100%;
+    }
+}
+
+/* respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce){
+    .notify-form,
+    .notify-form input,
+    .notify-form button{
+        transition: none;
+    }
+}
+/******** __--__-- STAY TUNED SECTION DESIGN 3.0 ENDS HERE __--__--********/
+
+/******** __--__-- FINAL CTA SECTION DESIGN 3.0 STARTS HERE __--__--********/
+/* Replace the whole "FINAL CTA SECTION DESIGN 2.0" block with this one.
+   Works with your current HTML. It reuses the "pulse" keyframes from your hero block. */
+
 .final-cta{
-    padding: 110px 7%;
+    position: relative;
+    overflow: hidden;
 
-    background: linear-gradient(
-        135deg, #2563eb, #0f9d9a
-    );
+    padding: 130px 7%;
+
+    background:
+        radial-gradient(circle at 12% 15%, rgba(255, 255, 255, 0.14), transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(15, 39, 71, 0.25), transparent 45%),
+        linear-gradient(135deg, #2563eb, #0f9d9a);
 
     color: #ffffff;
 
     text-align: center;
 }
 
+/* soft decorative circles */
+.final-cta::before,
+.final-cta::after{
+    content: "";
+    position: absolute;
+    z-index: 0;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+.final-cta::before{
+    top: -140px;
+    right: -100px;
+
+    width: 340px;
+    height: 340px;
+
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.final-cta::after{
+    bottom: -160px;
+    left: -120px;
+
+    width: 380px;
+    height: 380px;
+
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .final-cta-content{
+    position: relative;
+    z-index: 1;
+
     max-width: 800px;
 
     margin: 0 auto;
 }
 
-.final-cta .section-label{
-    color: rgba(255, 255, 255, 0.8);
+/* faint grid behind the text, the same texture as the hero, so the page ends the way it began */
+.final-cta-content::before{
+    content: "";
 
-    margin-bottom: 15px;
+    position: absolute;
+    inset: -130px -220px;
+    z-index: -1;
+
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 50px 50px;
+
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
+    mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
+
+    pointer-events: none;
 }
 
-.final-cta h2{
+/* ---------- Label ---------- */
+.final-cta .section-label{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
     margin-bottom: 20px;
+    padding: 8px 20px;
 
-    font-size: 48px;
-
-    line-height: 1.15;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
 
     color: #ffffff;
-/** i add intentionally this line to see effect**/
-    letter-spacing: 1.5px;
+
+    background: rgba(255, 255, 255, 0.14);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50px;
 }
 
-.final-cta-content>p:not(.section-label){
-    max-width: 650px;
+/* pulsing amber dot, echoes the "We're coming soon" badge in the hero */
+.final-cta .section-label::before{
+    content: "";
 
-    margin: 0 auto 30px;
+    width: 8px;
+    height: 8px;
 
-    font-size: 17px;
+    border-radius: 50%;
+    background-color: #f59e0b;
 
-    line-height: 1.7;
-
-    color: rgba(255, 255, 255, 0.85);
+    animation: pulse 1.8s infinite;
 }
 
+/* ---------- Heading ---------- */
+.final-cta h2{
+    position: relative;
+
+    margin-bottom: 30px;
+    padding-bottom: 26px;
+
+    font-size: clamp(34px, 5.5vw, 54px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+
+    color: #ffffff;
+
+    text-shadow: 0 6px 30px rgba(15, 39, 71, 0.25);
+
+    text-wrap: balance;
+}
+
+/* short underline, same idea as the other headings */
+.final-cta h2::after{
+    content: "";
+
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+
+    width: 80px;
+    height: 4px;
+
+    background: #ffffff;
+    border-radius: 10px;
+
+    opacity: 0.85;
+
+    transform: translateX(-50%);
+}
+
+.final-cta-content > p:not(.section-label){
+    max-width: 640px;
+
+    margin: 0 auto 44px;
+
+    font-size: 18px;
+    line-height: 1.8;
+
+    color: rgba(255, 255, 255, 0.92);
+}
+
+/* ---------- Button ---------- */
 .cta-button{
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
 
-    padding: 13px 28px;
+    padding: 17px 40px;
 
     background-color: #ffffff;
 
-    color: #2563eb;
+    color: #1d4ed8;
 
-    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50px;
 
-    font-size: 15px;
-
+    font-size: 16px;
     font-weight: 700;
 
+    box-shadow: 0 10px 25px rgba(15, 39, 71, 0.2),
+                inset 0 -2px 0 rgba(37, 99, 235, 0.12);
+
     transition: transform 0.3s ease,
-    box-shadow 0.3s ease;
+                box-shadow 0.3s ease,
+                gap 0.3s ease;
 }
 
-.cta-button:hover{
-    transform: translateY(-3px);
-
-    box-shadow: 08px 20px rgba(0, 0, 0, 0.2);
+/* arrow that slides on hover */
+.cta-button::after{
+    content: "\2192";
 }
-/******** __--__-- FINAL CTA SECTION DESIGN ENDS HERE __--__--********/
+
+.cta-button:hover,
+.cta-button:focus-visible{
+    transform: translateY(-4px);
+
+    gap: 14px;
+
+    box-shadow: 0 18px 35px rgba(15, 39, 71, 0.3),
+                inset 0 -2px 0 rgba(37, 99, 235, 0.12);
+}
+
+.cta-button:focus-visible{
+    outline: 2px solid #ffffff;
+    outline-offset: 4px;
+}
+
+.cta-button:active{
+    transform: translateY(-1px);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px){
+    .final-cta{
+        padding: 80px 5%;
+    }
+
+    .final-cta-content > p:not(.section-label){
+        font-size: 16px;
+    }
+
+    /* the grid would crowd the text on small screens */
+    .final-cta-content::before{
+        inset: -80px -40px;
+    }
+}
+
+@media (max-width: 480px){
+    .final-cta .section-label{
+        letter-spacing: 2px;
+    }
+
+    .cta-button{
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce){
+    .final-cta .section-label::before{
+        animation: none;
+    }
+
+    .cta-button{
+        transition: none;
+    }
+}
+/******** __--__-- FINAL CTA SECTION DESIGN 3.0 ENDS HERE __--__--********/
 
 
-/******** __--__-- FOOTER DESIGN STARTS HERE __--__--********/
+/******** __--__-- FANCY CTA BUTTON STARTS HERE __--__--********/
+/* In your Final CTA block, replace everything under "/* ---------- Button ---------- *\/"
+   (the .cta-button rules) with this. Then delete the old .cta-button rules inside the
+   480px media query and the reduced-motion query, because this file has its own. */
+
+@keyframes ctaHalo{
+    0%{
+        box-shadow: 0 12px 30px rgba(15, 39, 71, 0.25),
+                    0 0 0 0 rgba(255, 255, 255, 0.55);
+    }
+    70%, 100%{
+        box-shadow: 0 12px 30px rgba(15, 39, 71, 0.25),
+                    0 0 0 18px rgba(255, 255, 255, 0);
+    }
+}
+
+@keyframes ctaShine{
+    0%, 55%{
+        transform: translateX(-140%) skewX(-20deg);
+    }
+    100%{
+        transform: translateX(280%) skewX(-20deg);
+    }
+}
+
+.cta-button{
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 22px;
+
+    /* tighter on the right, where the arrow circle sits */
+    padding: 9px 9px 9px 38px;
+
+    color: #1d4ed8;
+
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+
+    /* white fill with a soft blue-to-violet rim */
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background:
+        linear-gradient(#ffffff, #ffffff) padding-box,
+        linear-gradient(135deg, #bfdbfe, #ffffff 45%, #ddd6fe) border-box;
+
+    cursor: pointer;
+
+    /* soft ripple that radiates outward to draw the eye */
+    animation: ctaHalo 2.6s ease-out infinite;
+
+    transition: transform 0.35s ease,
+                box-shadow 0.35s ease;
+}
+
+/* light streak that sweeps across the button every few seconds */
+.cta-button::before{
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    width: 55%;
+    height: 100%;
+
+    background: linear-gradient(
+        105deg,
+        transparent 15%,
+        rgba(124, 58, 237, 0.18) 50%,
+        transparent 85%
+    );
+
+    transform: translateX(-140%) skewX(-20deg);
+
+    animation: ctaShine 4s ease-in-out infinite;
+
+    pointer-events: none;
+}
+
+/* arrow lives in its own gradient circle */
+.cta-button::after{
+    content: "\2192";
+
+    flex-shrink: 0;
+
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    border-radius: 50%;
+
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+
+    transition: transform 0.4s ease,
+                box-shadow 0.4s ease;
+}
+
+.cta-button:hover,
+.cta-button:focus-visible{
+    transform: translateY(-5px) scale(1.03);
+
+    /* stop the idle ripple and show a stronger, steady glow */
+    animation: none;
+    box-shadow: 0 20px 40px rgba(15, 39, 71, 0.35),
+                0 0 0 6px rgba(255, 255, 255, 0.22);
+}
+
+/* arrow turns to point up and right */
+.cta-button:hover::after,
+.cta-button:focus-visible::after{
+    transform: rotate(-45deg) scale(1.08);
+
+    box-shadow: 0 10px 22px rgba(124, 58, 237, 0.55),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* the streak runs faster while hovering */
+.cta-button:hover::before,
+.cta-button:focus-visible::before{
+    animation-duration: 1.2s;
+}
+
+.cta-button:focus-visible{
+    outline: 2px solid #ffffff;
+    outline-offset: 5px;
+}
+
+.cta-button:active{
+    transform: translateY(-1px) scale(0.99);
+}
+
+/* ---------- Small phones ---------- */
+@media (max-width: 480px){
+    .cta-button{
+        width: 100%;
+
+        justify-content: space-between;
+
+        padding-left: 28px;
+    }
+}
+
+/* respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce){
+    .cta-button,
+    .cta-button::before{
+        animation: none;
+    }
+
+    .cta-button{
+        box-shadow: 0 12px 30px rgba(15, 39, 71, 0.25);
+    }
+
+    .cta-button,
+    .cta-button::after{
+        transition: none;
+    }
+}
+/******** __--__-- FANCY CTA BUTTON ENDS HERE __--__--********/
+
+
+
+/******** __--__-- FOOTER DESIGN 3.0 STARTS HERE __--__--********/
+/* Replace the whole "FOOTER DESIGN 2.0" block with this one.
+   Works with your current HTML. Icons inside the links are optional (see notes). */
+
 .footer{
-    padding: 70px 7% 25px;
+    position: relative;
+    overflow: hidden;
 
-    background-color: #081b33;
+    padding: 90px 7% 30px;
+
+    background:
+        radial-gradient(circle at 8% 0%, rgba(37, 99, 235, 0.18), transparent 40%),
+        radial-gradient(circle at 95% 100%, rgba(124, 58, 237, 0.14), transparent 40%),
+        linear-gradient(180deg, #081b33 0%, #06152a 100%);
 
     color: #ffffff;
 }
 
+/* thin gradient line along the top edge */
+.footer::before{
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background: linear-gradient(90deg, #2563eb, #7c3aed, #0f9d9a);
+}
+
 .footer-content{
+    position: relative;
+    z-index: 1;
+
     max-width: 1100px;
 
     margin: 0 auto;
 
     display: flex;
-
     justify-content: space-between;
+    align-items: flex-start;
 
     gap: 60px;
 }
 
+/* ---------- Brand ---------- */
 .footer-brand{
-    max-width: 300px;
+    max-width: 320px;
 }
 
-.footer-brand h3{
-    margin-bottom: 10px;
+.footer-brand .logo{
+    position: relative;
 
-    font-size: 24px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
 }
 
-.footer-brand p{
-    font-size: 14px;
-
-    color: rgba(255, 255, 255, 0.65);
+.footer-brand .logo a{
+    display: inline-block;
 }
 
-.footer-links{
+.footer-brand .logo img{
+    display: block;
+
+    height: 46px;
+    width: auto;
+
+    /* if your logo is dark and hard to see, uncomment this line */
+    /* filter: brightness(0) invert(1); */
+}
+
+/* short gradient underline under the logo */
+.footer-brand .logo::after{
+    content: "";
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 50px;
+    height: 3px;
+
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+    border-radius: 10px;
+}
+
+/* ---------- SVG badges ---------- */
+.footer-tags{
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
-    gap: 80px;
+    gap: 12px;
+}
+
+/* these are not links, so they only get a light hover glow, no movement */
+.footer-tags img{
+    display: block;
+
+    height: 44px;
+    width: auto;
+    max-width: 100%;
+
+    border-radius: 50px;
+
+    transition: box-shadow 0.3s ease,
+                filter 0.3s ease;
+}
+
+.footer-tags img:hover{
+    box-shadow: 0 8px 22px rgba(37, 99, 235, 0.35);
+
+    filter: brightness(1.12);
+}
+
+/* ---------- Link columns ---------- */
+.footer-links{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(120px, auto));
+
+    gap: 60px;
 }
 
 .footer-column{
     display: flex;
-
     flex-direction: column;
 
-    gap: 10px;
+    gap: 6px;
 
-    min-width: 110px;
+    min-width: 120px;
 }
 
 .footer-column h4{
-    margin-bottom: 8px;
+    position: relative;
 
-    font-size: 15px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
 
     color: #ffffff;
 }
 
-.footer-column a{
-    font-size: 14px;
+.footer-column h4::after{
+    content: "";
 
-    color: rgba(255, 255, 255, 0.65);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 28px;
+    height: 2px;
+
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+    border-radius: 10px;
+
+    transition: width 0.3s ease;
+}
+
+.footer-column:hover h4::after{
+    width: 48px;
+}
+
+/* ---------- Links ---------- */
+/* plain text at rest, so the footer stays calm. Hover slides the link and reveals an arrow. */
+.footer-column a{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    width: fit-content;
+
+    padding: 5px 0;
+
+    font-size: 15px;
+
+    color: rgba(255, 255, 255, 0.68);
+
+    border-radius: 6px;
+
+    transition: color 0.3s ease,
+                transform 0.3s ease;
+}
+
+/* optional icon in front of a link (Follow column) */
+.footer-column a i{
+    width: 18px;
+
+    text-align: center;
+
+    color: #60a5fa;
 
     transition: color 0.3s ease;
 }
 
-.footer-column a:hover{
-    color: #60a5fa;
+/* arrow that fades in on hover */
+.footer-column a::after{
+    content: "\2192";
+
+    color: #a78bfa;
+
+    opacity: 0;
+    transform: translateX(-6px);
+
+    transition: opacity 0.3s ease,
+                transform 0.3s ease;
 }
 
+.footer-column a:hover,
+.footer-column a:focus-visible{
+    color: #ffffff;
+
+    transform: translateX(4px);
+}
+
+.footer-column a:hover i,
+.footer-column a:focus-visible i{
+    color: #a78bfa;
+}
+
+.footer-column a:hover::after,
+.footer-column a:focus-visible::after{
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.footer-column a:focus-visible{
+    outline: 2px solid #60a5fa;
+    outline-offset: 4px;
+}
+
+/* ---------- Bottom bar ---------- */
 .footer-bottom{
+    position: relative;
+    z-index: 1;
+
     max-width: 1100px;
 
-    margin: 50px auto 0;
-
-    padding-top: 25px;
+    margin: 60px auto 0;
+    padding-top: 28px;
 
     border-top: 1px solid rgba(255, 255, 255, 0.12);
+
     text-align: center;
 }
 
 .footer-bottom p{
-    font-size: 13px;
+    font-size: 14px;
 
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.56);
 }
-/******** __--__-- FOOTER DESIGN ENDS HERE __--__--********/
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px){
+    .footer-content{
+        flex-direction: column;
+
+        gap: 50px;
+    }
+
+    .footer-brand{
+        max-width: 100%;
+    }
+
+    /* badges sit in a row when there is room */
+    .footer-tags{
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .footer-links{
+        width: 100%;
+
+        gap: 40px;
+    }
+}
+
+@media (max-width: 768px){
+    .footer{
+        padding: 70px 5% 25px;
+    }
+}
+
+@media (max-width: 560px){
+    .footer-tags{
+        flex-direction: column;
+    }
+
+    /* two columns: Platform + Company, then Follow below */
+    .footer-links{
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 40px 30px;
+    }
+
+    .footer-bottom{
+        margin-top: 45px;
+    }
+}
+
+/* respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce){
+    .footer-tags img,
+    .footer-column a,
+    .footer-column a i,
+    .footer-column a::after,
+    .footer-column h4::after{
+        transition: none;
+    }
+}
+/******** __--__-- FOOTER DESIGN 3.0 ENDS HERE __--__--********/
+
+

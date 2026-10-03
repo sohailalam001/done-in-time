@@ -7,126 +7,183 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css" integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg==" crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
+
 <body>
-    <!-- NAV BAR HTML CODE STARTS HERE -->
-     <header class = "navbar">
-        <!--LOGO-->
-        <div class = "logo">
-            <h1>Done in Time</h1>
-        </div>
-        <!--NAVIGATION LINKS-->
-        <nav class = "nav-links">
-                <a href="#">Home</a>
-                <a href="#">About</a>
-                <a href="#">How It Works</a>
-                <a href="#">Contact</a>
-        </nav>
-        <!--Button for stay tuned-->
-        <a href="#" class = "nav-button">Stay Tuned</a>
-     </header>
 
-     <!--HERO SECTION HTML CODE STARTS HERE -->
-     <main>
+<!-------- NAV BAR HTML CODE STARTS HERE -------->
+<header class="navbar">
 
-        <section class = "hero">
+    <!--LOGO-->
+    <div class="logo">
+        <a href="#home" aria-label="Done in Time - home">
+            <img src="assets/logo/logo.svg" alt="Done in Time">
+        </a>
+    </div>
 
-            <div class = "hero-content">
+    <!--MOBILE MENU TOGGLE (CSS only)-->
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation menu">
+    <label for="nav-toggle" class="nav-toggle-label" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
 
-                <p class="coming-soon">
-                    WE'RE COMING SOON...
-                </p>
+    <!--NAVIGATION LINKS-->
+    <nav class="nav-links" aria-label="Main navigation">
 
-                <h1>Get Your Work Done.<br>
-                    Done in Time.
-                </h1>
+        <a href="#home">Home
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
+        </a>
 
-                <p class="hero-description">
-                    A platform connecting people who need work done with
-                    people who can get it done.
-                </p>
+        <a href="#building">About
+            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+        </a>
 
-                <div class="hero-buttons">
-                    <a href="#" class="primary-button">Stay Tuned</a>
-                    <a href="#" class="secondary-button">Learn More</a>
-                </div>
+        <a href="#how-it-works">How It Works
+            <i class="fa-solid fa-spinner" aria-hidden="true"></i>
+        </a>
 
-            </div>
+        <a href="#stay-tuned">Contact
+            <i class="fa-solid fa-phone" aria-hidden="true"></i>
+        </a>
 
-        </section>
+    </nav>
 
-        <section class="building">
+    <!--Button for stay tuned-->
+    <a href="#notify-form" class="nav-button">Stay Tuned</a>
 
-            <div class="section-heading">
+</header>
+<!-------- NAV BAR HTML CODE ENDS HERE -------->
 
-                <p class="section-label">
-                    WHAT WE'RE BUILDING?
-                </p>
+     
+<main>
 
-                <h2>
-                    One platform. Many Possibilities.
-                </h2>
+<!-------- HERO SECTION HTML CODE STARTS HERE -------->
+    <section class="hero" id="home">
 
-                <p>
-                    Done In Time is being built to connect people 
-                    who need work done with people who can get it done.
-                </p>
+    <!--FLOATING GLASS ICONS (decorative)-->
+    <div class="hero-floaters" aria-hidden="true">
+        <span class="floater floater-1"><i class="fa-solid fa-hammer"></i></span>
+        <span class="floater floater-2"><i class="fa-solid fa-briefcase"></i></span>
+        <span class="floater floater-3"><i class="fa-solid fa-calendar-check"></i></span>
+        <span class="floater floater-4"><i class="fa-solid fa-lightbulb"></i></span>
+    </div>
 
-            </div>
+    <div class="hero-content">
 
-        <div class="building-cards">
+        <p class="coming-soon">
+            WE'RE COMING SOON
+        </p>
 
-                <!--Card 1-->
-                <div class="building-card">
-                    <h3>Find Work</h3>
-                    <p>
-                        Discover oppurtunities that match your skills, 
-                        locations, and interests.
-                    </p>
+        <h1>Get Your Work Done.<br>
+            <span class="highlight">Done in Time.</span>
+        </h1>
 
-                </div>
+        <p class="hero-description">
+            A platform connecting people who need work done with
+            people who can get it done.
+        </p>
 
-                <!--Card 2-->
-                <div class="building-card">
-
-                    <h3>Post Work</h3>
-
-                    <p>
-                        Have something that needs to be done? 
-                        Post it and find the right person for the job.
-                    </p>
-
-                </div>
-
-            <!--Card 3-->
-            <div class="building-card">
-
-                <h3>Connect</h3>
-
-                <p>
-                    Connect customers with skilled people who
-                    can get the job done for you.
-                </p>
-
-            </div>
-
-            <!--Card 4-->
-            <div class="building-card">
-
-                <h3>Grow</h3>
-
-                <p>
-                   Build your profile, showcase your skills, 
-                   and discover new opportunities.
-                </p>
-
-            </div>
-
+        <div class="hero-buttons">
+            <a href="#stay-tuned" class="primary-button">Stay Tuned</a>
+            <a href="#building" class="secondary-button">Learn More</a>
         </div>
 
-        </section>
+        <ul class="hero-chips">
+            <li><i class="fa-solid fa-share" aria-hidden="true"></i> Post work</li>
+            <li><i class="fa-solid fa-magnifying-glass-location" aria-hidden="true"></i> Find work</li>
+            <li><i class="fa-solid fa-hourglass-end" aria-hidden="true"></i> Done in time</li>
+        </ul>
 
-        <!--HOW IT WORKS-->
-        <section class="how-it-works">
+    </div>
+
+    <!--SCROLL CUE-->
+    <a href="#building" class="scroll-cue" aria-label="Scroll down to learn more">
+        <span></span>
+    </a>
+
+    </section>
+<!-------- HERO SECTION HTML CODE ENDS HERE -------->
+
+
+<!-------- BUILDING SECTION HTML CODE STARTS HERE -------->
+        <section class="building" id="building">
+
+    <div class="section-heading">
+
+        <p class="section-label">WHAT WE'RE BUILDING</p>
+
+        <h2>One Platform. Many Possibilities.</h2>
+
+        <p>
+            Done In Time is being built to connect people
+            who need work done with people who can get it done.
+        </p>
+
+    </div>
+
+    <div class="building-cards">
+
+        <!--Card 1-->
+        <article class="building-card">
+            <span class="building-number" aria-hidden="true">01</span>
+            <div class="building-icon">
+                <i class="fa-solid fa-magnifying-glass-location" aria-hidden="true"></i>
+            </div>
+            <h3>Find Work</h3>
+            <p>
+                Discover opportunities that match your skills,
+                location, and interests.
+            </p>
+        </article>
+
+        <!--Card 2-->
+        <article class="building-card">
+            <span class="building-number" aria-hidden="true">02</span>
+            <div class="building-icon">
+                <i class="fa-solid fa-bullhorn" aria-hidden="true"></i>
+            </div>
+            <h3>Post Work</h3>
+            <p>
+                Have something that needs to be done?
+                Post it and find the right person for the job.
+            </p>
+        </article>
+
+        <!--Card 3-->
+        <article class="building-card">
+            <span class="building-number" aria-hidden="true">03</span>
+            <div class="building-icon">
+                <i class="fa-solid fa-handshake" aria-hidden="true"></i>
+            </div>
+            <h3>Connect</h3>
+            <p>
+                Connect customers with skilled people who
+                can get the job done for you.
+            </p>
+        </article>
+
+        <!--Card 4-->
+        <article class="building-card">
+            <span class="building-number" aria-hidden="true">04</span>
+            <div class="building-icon">
+                <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+            </div>
+            <h3>Grow</h3>
+            <p>
+                Build your profile, showcase your skills,
+                and discover new opportunities.
+            </p>
+        </article>
+
+    </div>
+
+</section>
+<!-------- BUILDING SECTION HTML CODE ENDS HERE -------->
+
+
+<!-------- HOW IT WORKS SECTION HTML CODE STARTS HERE -------->
+<section class="how-it-works">
 
             <div class="section-heading">
                 
@@ -199,10 +256,12 @@
 
             </div>
                   
-        </section>
+</section>
+<!-------- HOW IT WORKS SECTION HTML CODE ENDS HERE -------->
+        
 
-        <!--CATEGORIES SECTION HTML CODE STARTS HERE-->
-        <section class="categories">
+<!-------- CATEGORIES SECTION HTML CODE STARTS HERE -------->
+<section class="categories">
             
             <div class="section-heading">
 
@@ -227,7 +286,9 @@
                 <!--Card 1-->
                 <div class="category-card">
 
-                    <h3>Home Services</h3>
+                    <h3>
+                        <i class="fa-solid fa-person-shelter"></i><br>
+                        Home Services</h3>
 
                     <p>
                         Find skilled professionals for home repairs, cleaning, and maintenance.
@@ -238,7 +299,9 @@
                 <!--Card 2-->
                 <div class="category-card">
 
-                    <h3>Freelance Work</h3>
+                    <h3>
+                        <i class="fa-solid fa-house-laptop"></i><br>
+                        Freelance Work</h3>
 
                     <p>
                         Connect with freelancers for writing, design, programming, and more.
@@ -249,7 +312,9 @@
                 <!--Card 3-->
                 <div class="category-card">
 
-                    <h3>Event Planning</h3>
+                    <h3>
+                        <i class="fa-solid fa-calendar-check"></i><br>
+                        Event Planning</h3>
 
                     <p>
                         Hire experts for event planning, catering, and entertainment services.
@@ -260,7 +325,9 @@
                 <!--Card 4-->
                 <div class="category-card">
 
-                    <h3>Professional Services</h3>
+                    <h3>
+                        <i class="fa-solid fa-user-tie"></i><br>
+                        Professional Services</h3>
 
                     <p>
                         Find professionals for legal, financial, and consulting services.
@@ -271,7 +338,9 @@
                 <!--Card 5-->
                 <div class="category-card">
 
-                    <h3>Delivery & Logistics</h3>
+                    <h3>
+                        <i class="fa-solid fa-truck-fast"></i><br>
+                        Delivery & Logistics</h3>
 
                     <p>
                         Connect with delivery drivers and logistics experts for your business needs.
@@ -282,7 +351,9 @@
                 <!--Card 6-->
                 <div class="category-card">
 
-                    <h3>Creative Services</h3>
+                    <h3>
+                        <i class="fa-solid fa-lightbulb"></i><br>
+                        Creative Services</h3>
 
                     <p>
                         Hire creative professionals for photography, videography, and marketing services.
@@ -293,7 +364,9 @@
                 <!--Card 7-->
                 <div class="category-card">
 
-                    <h3>Health & Wellness</h3>
+                    <h3>
+                        <i class="fa-solid fa-user-doctor"></i><br>
+                        Health & Wellness</h3>
 
                     <p>
                         Find professionals for fitness training, nutrition, and wellness services.
@@ -304,7 +377,9 @@
                 <!--Card 8-->
                 <div class="category-card">
 
-                    <h3>Education & Tutoring</h3>
+                    <h3>
+                        <i class="fa-solid fa-chalkboard-user"></i><br>
+                        Education & Tutoring</h3>
 
                     <p>
                         Connect with tutors and educators for academic support and skill development.
@@ -315,7 +390,9 @@
                 <!--Card 9-->
                 <div class="category-card">
 
-                    <h3>Automotive Services</h3>
+                    <h3>
+                        <i class="fa-solid fa-car-rear"></i><br>
+                        Automotive Services</h3>
 
                     <p>
                         Find mechanics and automotive experts for repairs, maintenance, and customization.
@@ -326,20 +403,24 @@
                 <!--Card 10-->
                 <div class="category-card">
 
-                    <h3>Gardening</h3>
+                    <h3>
+                        <i class="fa-solid fa-trowel"></i><br>
+                        Gardening</h3>
 
                     <p>
-                        Find gardners for your yard, farm or lawn.
+                        Find gardener for your yard, farm or lawn.
                     </p>
 
                 </div>
 
             </div>
 
-        </section>
+</section>
+<!-------- CATEGORIES SECTION HTML CODE ENDS HERE -------->
 
-        <!--FOR CUSTOMERS AND WORKERS-->
-        <section class="users">
+        
+<!-------- USERS SECTION HTML CODE STARTS HERE -------->
+<section class="users">
             
             <div class="section-heading">
 
@@ -376,7 +457,7 @@
                         and get it done on time.
                     </p>
 
-                    <a href="#" class="user-button">Post Your Work</a>
+                    <a href="#stay-tuned" class="user-button">Post Your Work</a>
 
                 </div>
 
@@ -395,16 +476,18 @@
                         and grow your career.
                     </p>
 
-                    <a href="#" class="user-button">Find Work</a>
+                    <a href="#stay-tuned" class="user-button">Find Work</a>
 
                 </div>
 
             </div>
 
-        </section>
+</section>
+<!-------- USERS SECTION HTML CODE ENDS HERE -------->
+        
 
-        <!--STAY TUNED / NOTIFY ME-->
-        <section class="stay-tuned">
+<!-------- STAY-TUNED SECTION HTML CODE STARTS HERE -------->
+<section class="stay-tuned">
 
             <div class="stay-tuned-content">
 
@@ -417,29 +500,29 @@
                 </h2>
 
                 <p>
-                    We're working hard to bring you "Done In Time".
-                    Sign up to be notified when we launch, 
-                    and be the first to know about our progress.
-                    Leave your email and we'll let you 
-                    know when "Done In Time" launches...
+                    Done In Time is almost ready. Leave your email and we'll
+                    let you know the moment we launch.
                 </p>
 
                 <form class="notify-form">
 
-                    <input type="email" placeholder="Enter your email" required>
+                    <input type="email" name="email" placeholder="Enter your email"
+                         aria-label="Email address" autocomplete="email" required>
 
-                    <button type="submit">
-                        Notify Me
-                    </button>
+                        <button type="submit">Notify Me</button>
 
                 </form>
 
+                <p class="form-message" role="status" aria-live="polite"></p>
+
             </div>
 
-        </section>
+</section>
+<!-------- STAY-TUNED SECTION HTML CODE ENDS HERE -------->
+        
 
-        <!--FINAL CTA-->
-        <section class="final-cta">
+<!-------- FINAL-CTA SECTION HTML CODE STARTS HERE -------->
+<section class="final-cta">
 
             <div class="final-cta-content">
 
@@ -453,83 +536,104 @@
                 </h2>
 
                 <p>
-                    Done In Time is being built to connect people 
-                    who need work done with people who can get it done.
+                    Whether you need a hand or have one to offer, Done In Time
+                    is on its way. Be there from day one.
                 </p>
 
-                <a href="#" class="cta-button">Stay Tuned</a>
+                <a href="#stay-tuned" class="cta-button">Stay Tuned</a>
 
             </div>
 
-        </section>
+</section>
+<!-------- FINAL-CTA SECTION HTML CODE ENDS HERE -------->
+        
 
-     </main>
+</main>
 
-     <!--FOOTER HTML CODE STARTS HERE-->
-        <footer class="footer">
+
+<!-------- FOOTER HTML CODE STARTS HERE -------->
+<footer class="footer">
     
-            <div class="footer-content">
+    <div class="footer-content">
 
-                <div class="footer-brand">
+        <div class="footer-brand">
 
-                    <h3>
-                    Done in Time
-                    </h3>
+            <!--LOGO-->
+            <div class="logo">
 
-                    <p>
-                        Work : Skills : Opportunities
-                    </p>
-
-                </div>
-
-                <div class="footer-links">
-
-                    <div class="footer-column">
-                        
-                        <h4>Platform</h4>
-
-                        <a href="#">How It Works</a>
-                        <a href="#">Categories</a>
-                        <a href="#">Find Work</a>
-                        <a href="#">Post Work</a>
-
-                    </div>
-
-                    <div class="footer-column">
-                        
-                        <h4>Company</h4>
-
-                        <a href="#">About</a>
-                        <a href="#">Contact</a>
-                        <a href="#">Coming Soon</a>
-
-                    </div>
-
-                    <div class="footer-column">
-
-                        <h4>Follow</h4>
-
-                        <a href="#">Instagram</a>
-                        <a href="#">Twitter</a>
-                        <a href="#">LinkedIn</a>
-
-                    </div>
-
-                </div>
+                <a href="#">
+                <img src="assets/logo/logo-footer.svg" alt="BRAND-LOGO">
+                </a>
 
             </div>
 
-            <div class="footer-bottom">
+            <div class="footer-tags">
 
-                <p>
-                    &copy; 2026 Done in Time. All rights reserved.
-                </p>
+            <img src="assets/logo/work.svg" alt="Work">
+            <img src="assets/logo/skills.svg" alt="Skills">
+            <img src="assets/logo/opportunities.svg" alt="Opportunities">
 
             </div>
 
-        </footer>
+        </div>
 
-    <script src="script.js"></script>
+        <div class="footer-links">
+
+            <div class="footer-column">
+                        
+                <h4>Platform</h4>
+
+                <a href="#">How It Works</a>
+                <a href="#">Categories</a>
+                <a href="#">Find Work</a>
+                <a href="#">Post Work</a>
+
+            </div>
+
+            <div class="footer-column">
+                        
+                <h4>Company</h4>
+
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+                <a href="#">Coming Soon</a>
+
+            </div>
+
+            <div class="footer-column">
+
+                <h4>Follow</h4>
+
+                <a href="https://instagram.com/yourhandle" target="_blank" rel="noopener">
+                        <i class="fa-brands fa-instagram" aria-hidden="true"></i> Instagram
+                </a>
+
+                <a href="https://x.com/yourhandle" target="_blank" rel="noopener">
+                        <i class="fa-brands fa-x-twitter" aria-hidden="true"></i> Twitter
+                </a>
+                        
+                <a href="https://linkedin.com/company/yourpage" target="_blank" rel="noopener">
+                        <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+        <div class="footer-bottom">
+
+            <p>
+                &copy; 2026 Done in Time. All rights reserved.
+            </p>
+
+        </div>
+
+</footer>
+<!-------- FOOTER HTML CODE ENDS HERE -------->
+        
+<script src="script.js"></script>
 
 </body>
 
